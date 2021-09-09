@@ -1,0 +1,32 @@
+# kubectl -n <k8s-namespace> create secret docker-registry alembik --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>  --docker-email=<email-address>
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: reddit-news-deployment
+  labels:
+    app: reddit-news
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: reddit-news-producer-1
+          image: ghcr.io/gabrielepicco/alembik/alembik-producer
+          env:
+          - name: MONGO_HOST
+            value: "mongodb"
+          imagePullPolicy: Always
+      containers:
+        - name: reddit-news-producer-2
+          image: ghcr.io/gabrielepicco/alembik/alembik-producer
+          env:
+          - name: SOURCE
+            value: "reddit"
+          - name: SUBREDDIT
+            value: "news"
+          - name: MONGO_HOST
+            value: "mongodb"
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: alembik
+      restartPolicy: Never

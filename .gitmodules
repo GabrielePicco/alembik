@@ -1,0 +1,4 @@
+[submodule "alembik-producer"]
+	path = alembik-producer
+	url = git@github.com:GabrielePicco/alembik-producer.git
+	branch = main

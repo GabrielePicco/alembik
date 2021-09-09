@@ -1,0 +1,24 @@
+# kubectl -n <k8s-namespace> create secret docker-registry alembik --docker-server=ghcr.io --docker-username=<github-username> --docker-password=<github-personal-access-token>  --docker-email=<email-address>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alembik-producer-deployment
+  labels:
+    app: alembik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alembik
+  template:
+    metadata:
+      labels:
+        app: alembik
+    spec:
+      containers:
+        - name: alembik-producer
+          image: ghcr.io/gabrielepicco/alembik/alembik-producer
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: alembik
