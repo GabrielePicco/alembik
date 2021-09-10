@@ -3,22 +3,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alembik-producer-deployment
+  name: mongodb
   labels:
-    app: alembik
+    app: mongodb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alembik
+      app: mongodb
   template:
     metadata:
       labels:
-        app: alembik
+        app: mongodb
     spec:
       containers:
-        - name: alembik-producer
-          image: ghcr.io/gabrielepicco/alembik/alembik-producer
-          imagePullPolicy: Always
-      imagePullSecrets:
-        - name: alembik
+        - name: mongo
+          image: mongo:4.2
+          ports:
+            - name: mongo
+              containerPort: 27017
+          volumeMounts:
+            - name: volv
+              mountPath: /data/db
+      volumes:
+        - name: volv
+          persistentVolumeClaim:
+            claimName: mongo-volume
