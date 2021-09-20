@@ -3,38 +3,34 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: reddit-news-deployment
-  labels:
-    app: reddit-news
+  name: hacker-news-deployment
 spec:
-  schedule: "0 */4 * * *"
+  schedule: "15 */4 * * *"
   jobTemplate:
     spec:
       template:
         spec:
           initContainers:
-            - name: reddit-news-producer
+            - name: hacker-news-producer
               image: ghcr.io/gabrielepicco/alembik/alembik-producer
               env:
               - name: SOURCE
-                value: "reddit"
-              - name: SUBREDDIT
-                value: "news"
+                value: hackernews
               - name: MONGO_HOST
-                value: "mongodb"
+                value: mongodb
               - name: MONGO_DB
-                value: "alembik"
+                value: alembik
               imagePullPolicy: Always
           containers:
-            - name: reddit-news-instagram-consumer
+            - name: hacker-news-instagram-consumer
               image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
               env:
               - name: MONGO_HOST
-                value: "mongodb"
+                value: mongodb
               - name: MONGO_DB
-                value: "alembik"
+                value: alembik
               - name: ACCOUNT
-                value: reddit-news
+                value: hackernews
               - name: LOGGING_LEVEL
                 value: debug
               imagePullPolicy: Always
