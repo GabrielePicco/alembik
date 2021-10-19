@@ -8,8 +8,10 @@ metadata:
     app: reddit-news
 spec:
   schedule: "0 */4 * * *"
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
+      backoffLimit: 0
       template:
         spec:
           initContainers:
