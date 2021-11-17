@@ -21,8 +21,10 @@ Alembik Kubernetes deployment files
 
     git submodule update --remote 
     
-    
-### Update Instagram token
+  
+# Useful information
+  
+## Update Instagram token
 
 1. Go to https://developers.facebook.com/apps/393538215044865/dashboard/
 2. Tools -> Graph API Explorer -> Generate Access Token
