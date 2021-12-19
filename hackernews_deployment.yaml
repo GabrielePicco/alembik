@@ -9,7 +9,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 3
+      backoffLimit: 0
       template:
         spec:
           initContainers:
@@ -24,20 +24,6 @@ spec:
                 value: alembik
               imagePullPolicy: Always
           containers:
-            - name: hacker-news-instagram-consumer
-              image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
-              env:
-              - name: MONGO_HOST
-                value: mongodb
-              - name: MONGO_DB
-                value: alembik
-              - name: ACCOUNT
-                value: hackernews
-              - name: SOCIAL
-                value: instagram
-              - name: LOGGING_LEVEL
-                value: debug
-              imagePullPolicy: Always
             - name: hacker-news-twitter-consumer
               image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
               env:
@@ -49,6 +35,20 @@ spec:
                 value: hackernews
               - name: SOCIAL
                 value: twitter
+              - name: LOGGING_LEVEL
+                value: debug
+              imagePullPolicy: Always
+            - name: hacker-news-instagram-consumer
+              image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
+              env:
+              - name: MONGO_HOST
+                value: mongodb
+              - name: MONGO_DB
+                value: alembik
+              - name: ACCOUNT
+                value: hackernews
+              - name: SOCIAL
+                value: instagram
               - name: LOGGING_LEVEL
                 value: debug
               imagePullPolicy: Always

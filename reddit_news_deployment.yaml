@@ -11,7 +11,7 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      backoffLimit: 3
+      backoffLimit: 0
       template:
         spec:
           initContainers:
@@ -28,6 +28,20 @@ spec:
                 value: "alembik"
               imagePullPolicy: Always
           containers:
+            - name: reddit-news-static-website-consumer
+              image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
+              env:
+              - name: MONGO_HOST
+                value: mongodb
+              - name: MONGO_DB
+                value: alembik
+              - name: ACCOUNT
+                value: reddit-news
+              - name: SOCIAL
+                value: static_website
+              - name: LOGGING_LEVEL
+                value: debug
+              imagePullPolicy: Always
             - name: reddit-news-instagram-consumer
               image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
               env:
