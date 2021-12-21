@@ -3,18 +3,15 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: reddit-news-deployment
-  labels:
-    app: reddit-news
+  name: reddit-news-producer-deployment
 spec:
-  schedule: "0 */4 * * *"
-  concurrencyPolicy: Forbid
+  schedule: "0 */1 * * *"
   jobTemplate:
     spec:
       backoffLimit: 0
       template:
         spec:
-          initContainers:
+          containers:
             - name: reddit-news-producer
               image: ghcr.io/gabrielepicco/alembik/alembik-producer
               env:
@@ -27,6 +24,21 @@ spec:
               - name: MONGO_DB
                 value: "alembik"
               imagePullPolicy: Always
+          imagePullSecrets:
+            - name: alembik
+          restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reddit-news-static-website-deployment
+spec:
+  schedule: "10 */1 * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
           containers:
             - name: reddit-news-static-website-consumer
               image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
@@ -42,6 +54,23 @@ spec:
               - name: LOGGING_LEVEL
                 value: debug
               imagePullPolicy: Always
+          imagePullSecrets:
+            - name: alembik
+          restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reddit-news-instagram-deployment
+spec:
+  schedule: "10 */3 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          containers:
             - name: reddit-news-instagram-consumer
               image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
               env:
@@ -53,6 +82,37 @@ spec:
                 value: reddit-news
               - name: LOGGING_LEVEL
                 value: debug
+              imagePullPolicy: Always
+          imagePullSecrets:
+            - name: alembik
+          restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reddit-news-twitter-deployment
+spec:
+  schedule: "10 */1 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          containers:
+            - name: reddit-news-twitter-consumer
+              image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
+              env:
+              - name: MONGO_HOST
+                value: "mongodb"
+              - name: MONGO_DB
+                value: "alembik"
+              - name: ACCOUNT
+                value: reddit-news
+              - name: LOGGING_LEVEL
+                value: debug
+              - name: SOCIAL
+                value: twitter
               imagePullPolicy: Always
           imagePullSecrets:
             - name: alembik

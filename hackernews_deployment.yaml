@@ -3,16 +3,15 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: hacker-news-deployment
+  name: hacker-news-producer-deployment
 spec:
-  schedule: "15 */4 * * *"
-  concurrencyPolicy: Forbid
+  schedule: "0 */1 * * *"
   jobTemplate:
     spec:
       backoffLimit: 0
       template:
         spec:
-          initContainers:
+          containers:
             - name: hacker-news-producer
               image: ghcr.io/gabrielepicco/alembik/alembik-producer
               env:
@@ -23,6 +22,51 @@ spec:
               - name: MONGO_DB
                 value: alembik
               imagePullPolicy: Always
+          imagePullSecrets:
+            - name: alembik
+          restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hacker-news-instagram-deployment
+spec:
+  schedule: "10 */3 * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          containers:
+            - name: hacker-news-instagram-consumer
+              image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
+              env:
+              - name: MONGO_HOST
+                value: mongodb
+              - name: MONGO_DB
+                value: alembik
+              - name: ACCOUNT
+                value: hackernews
+              - name: SOCIAL
+                value: instagram
+              - name: LOGGING_LEVEL
+                value: debug
+              imagePullPolicy: Always
+          imagePullSecrets:
+            - name: alembik
+          restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hacker-news-twitter-deployment
+spec:
+  schedule: "10 */1 * * *"
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
           containers:
             - name: hacker-news-twitter-consumer
               image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
@@ -35,20 +79,6 @@ spec:
                 value: hackernews
               - name: SOCIAL
                 value: twitter
-              - name: LOGGING_LEVEL
-                value: debug
-              imagePullPolicy: Always
-            - name: hacker-news-instagram-consumer
-              image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer:latest
-              env:
-              - name: MONGO_HOST
-                value: mongodb
-              - name: MONGO_DB
-                value: alembik
-              - name: ACCOUNT
-                value: hackernews
-              - name: SOCIAL
-                value: instagram
               - name: LOGGING_LEVEL
                 value: debug
               imagePullPolicy: Always
