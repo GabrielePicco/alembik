@@ -22,7 +22,7 @@ Alembik can be used to create an automated blog or website, with integrated soci
 
 ### Social networks integrations
 
-- [examples]({{ site.baseurl }}examples)
+- [examples]({{ site.baseurl }}/examples)
 
 ## About the project
 
