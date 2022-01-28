@@ -4,7 +4,7 @@ title: Alembik
 url: "https://gabrielepicco.github.io"
 baseurl: /alembik-kubernetes
 
-description: Alembik documentation.
+description: Alembik documentation
 remote_theme: pmarsceill/just-the-docs
 color_scheme: "light"
 search_enabled: true
