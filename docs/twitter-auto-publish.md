@@ -22,4 +22,4 @@ nav_order: 1
 
     - [https://developer.twitter.com/en/portal/dashboard ](https://developer.twitter.com/en/portal/dashboard )
  
-    ![](../docs/assets/credentials.png)
+    ![](./assets/credentials.png)
