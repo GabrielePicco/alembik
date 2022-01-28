@@ -20,9 +20,9 @@ Automated social network manager
 
 Alembik can be used to create an automated blog or website, with integrated social networks sharing
 
-### Examples
+### Social networks integrations
 
-- [Collection of DeepSearch examples]({{ site.baseurl }}examples)
+- [examples]({{ site.baseurl }}examples)
 
 ## About the project
 
