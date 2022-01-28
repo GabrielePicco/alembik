@@ -15,7 +15,7 @@ heading_anchors: true
 # Aux links for the upper right navigation
 aux_links:
   "Alembik website":
-    - "www.alembik.io"
+    - "#"
     
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: true
