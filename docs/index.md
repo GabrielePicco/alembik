@@ -12,7 +12,7 @@ permalink: /
 Automated social network manager
 {: .fs-6 .fw-300 }
 
-[Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Alembik website](https://www.alembik.io){: .btn .fs-5 .mb-4 .mb-md-0 }
+[Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 } [Alembik website](#){: .btn .fs-5 .mb-4 .mb-md-0 }
 
 ---
 
