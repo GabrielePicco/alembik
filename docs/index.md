@@ -28,7 +28,7 @@ Alembik can be used to create an automated blog or website, with integrated soci
 
 Discover more option on alembik.io
 
-#### Manteiners:
+#### Contributors:
 
 <ul class="list-style-none">
 {% for contributor in site.github.contributors %}
