@@ -6,7 +6,7 @@ nav_order: 1
 
 # Auto publish to Twitter
 
-1. Create a Twitter Account, if you don't already have one and associate a [phone number](https://twitter.com/settings/phone) to it
+1. Create a Twitter Account, if you don't already have one, and associate a [phone number](https://twitter.com/settings/phone) to it
 
 2. Apply for a Twitter Developer Account: 
 
