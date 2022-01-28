@@ -23,3 +23,40 @@ nav_order: 1
     - [https://developer.twitter.com/en/portal/dashboard ](https://developer.twitter.com/en/portal/dashboard )
  
     ![](./assets/credentials.png)
+    
+6. Add a github action for posting recurretly on Twitter
+
+    ```yml
+    name: Produce and Consume
+
+    # Controls when the workflow will run
+    on:
+
+      schedule:
+      - cron: '0 */1 * * *'.  # Run every hour
+
+      # Allows you to run this workflow manually from the Actions tab
+      workflow_dispatch:
+
+    # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    jobs:
+      consume-twitter:
+        needs: produce
+        runs-on: ubuntu-latest
+        environment: alembik
+        container:
+          image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer
+          credentials:
+             username: ${{ github.actor }}
+             password: ${{ secrets.GHCR_TOKEN }}
+          env:
+            MONGO_HOST: ${{ secrets.MONGO_HOST }}
+            MONGO_DB: alembik
+            SOCIAL: twitter
+            LOGGING_LEVEL: debug
+            ACCOUNT: reddit-CryptoCurrency
+        steps:
+          - name: Consume twitter
+            working-directory: /app
+            run: python -m alembik
+    ```
