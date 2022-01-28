@@ -26,6 +26,8 @@ nav_order: 1
     
 6. Add a github action for posting recurretly on Twitter
 
+    Create an environment `alembik` in the repository and add secrets `MONGO_HOST` and `GHCR_TOKEN` (github token with permission to pull the two private repositories producer/consumer)
+
     ```yml
     name: Produce and Consume
 
@@ -41,7 +43,6 @@ nav_order: 1
     # A workflow run is made up of one or more jobs that can run sequentially or in parallel
     jobs:
       consume-twitter:
-        needs: produce
         runs-on: ubuntu-latest
         environment: alembik
         container:
