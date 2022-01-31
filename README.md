@@ -1,3 +1,3 @@
 # Documentation
 
-https://gabrielepicco.github.io/alembik-kubernetes/
+https://gabrielepicco.github.io/alembik/
