@@ -13,7 +13,6 @@ on:
 jobs:
   produce:
     runs-on: ubuntu-latest
-    environment: alembik
     container:
       image: ghcr.io/gabrielepicco/alembik/alembik-producer
       credentials:
@@ -25,9 +24,6 @@ jobs:
         MONGO_DB: alembik
         USE_DEEP_LEARNING: true
     steps:
-      - name: Download nltk lang
-        working-directory: /app
-        run: python -c "import nltk;nltk.download('punkt')"
       - name: Produce
         working-directory: /app
         run: python -m alembik
@@ -35,7 +31,6 @@ jobs:
   consume-twitter:
     needs: produce
     runs-on: ubuntu-latest
-    environment: alembik
     container:
       image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer
       credentials:
