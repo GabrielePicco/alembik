@@ -1,0 +1,32 @@
+
+name: HackerNews -  Consume Instagram
+
+# Controls when the workflow will run
+on:
+  
+  schedule:
+  - cron: '10 */3 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  consume-instagram:
+    needs: produce
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/lucacillario/alembik/alembik-instagram-consumer
+      credentials:
+         username: ${{ github.actor }}
+         password: ${{ secrets.GHCR_TOKEN }}
+      env:
+        MONGO_HOST: ${{ secrets.MONGO_HOST }}
+        MONGO_DB: alembik
+        SOCIAL: instagram
+        LOGGING_LEVEL: debug
+        ACCOUNT: hackernews
+    steps:
+      - name: Consume twitter
+        working-directory: /app
+        run: python -m alembik
