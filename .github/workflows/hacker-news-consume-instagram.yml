@@ -26,6 +26,6 @@ jobs:
         LOGGING_LEVEL: debug
         ACCOUNT: hackernews
     steps:
-      - name: Consume twitter
+      - name: Consume instagram
         working-directory: /app
         run: python -m alembik
